@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بحث الجداول</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .search-box {
+      margin: 30px auto;
+      max-width: 400px;
+      display: flex;
+      gap: 10px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #145aa9;
+    }
+    .results {
+      margin-top: 30px;
+    }
+    .result-item {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px auto;
+      max-width: 600px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 محرك بحث الجداول</h1>
+  <div class="search-box">
+    <input type="text" id="search-input" placeholder="اكتب كلمة للبحث..." />
+    <button id="search-btn">بحث</button>
+  </div>
+  <div class="results" id="results"></div>
+
+  <script>
+    document.getElementById("search-btn").onclick = function () {
+      let query = document.getElementById("search-input").value.trim();
+      if (query === "") {
+        document.getElementById("results").innerHTML = "<div class='result-item'>📝 يرجى إدخال كلمة للبحث</div>";
+        return;
+      }
+
+      fetch(`https://script.google.com/macros/s/AKfycbwlSAC88yT7XB33y391BR0SM0ZD37wNgcMXG42bJjkAodp4B4R6qUypX5wO2TaRZS8s/exec?q=${encodeURIComponent(query)}`)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById("results").innerHTML = html;
+        });
+    };
+  </script>
+</body>
+</html>
